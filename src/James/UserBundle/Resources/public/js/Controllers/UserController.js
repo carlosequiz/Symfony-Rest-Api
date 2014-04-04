@@ -1,4 +1,4 @@
-James.controller('UserController', ['$scope', '$http', function($scope, $http){
+myApp.controller('UserController', ['$scope', '$http', function($scope, $http){
 	$scope.newFirstName = null;
 	$scope.newLastName = null;
 	$scope.newEmail = null;
