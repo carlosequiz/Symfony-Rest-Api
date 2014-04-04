@@ -1,0 +1,5 @@
+services:
+    utility.api_privilege:
+        class: James\UtilityBundle\Service\ApiPrivilege
+        arguments:
+            - "@service_container"

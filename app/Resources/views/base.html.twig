@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Symfony/Angular Rest API{% endblock %}</title>
+
+        <!-- Bootstrap 3.1.1 -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+        {% stylesheets 
+                       '../app/Resources/public/css/logo-nav.css'
+           filter='cssrewrite' %}
+          <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+        {% block stylesheets %}{% endblock %}
+
+        <link href="css/logo-nav.css" rel="stylesheet">
+    </head>
+    <body ng-app="myApp">
+        {% block body %}
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                       <h3 class="text-primary">Test Symfony REST API + Angular</h3>
+                    </div>
+                </div>
+                <!-- /.container -->
+            </nav>
+
+            <div class="container">
+                {% block content %}{% endblock %}
+            </div>
+
+        {% endblock %}
+
+        <!-- Angular 1.2.15 -->
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+
+        <!-- Use Symfony Route Generation in Javascript -->
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+        {% javascripts 
+        '../app/Resources/public/js/app.js'
+        %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

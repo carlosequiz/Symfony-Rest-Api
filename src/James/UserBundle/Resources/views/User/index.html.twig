@@ -1,0 +1,103 @@
+{% extends '::base.html.twig' %}
+
+    {% block content %}
+        <div ng-controller="UserController">
+            <div ng-show="successMessage" ng-bind="successMessage" id="success-message" class="alert alert-success alert-dismissable"></div>
+            <div ng-show="errorMessage" ng-bind="errorMessage" id="error-message" class="alert alert-danger alert-dismissable"></div>
+
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="glyphicon glyphicon-user"></span> Users</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="navbar-form" role="search" ng-submit="searchUser()">
+                      <div class="form-group">
+                        <input type="text" name="searchIdTerm" placeholder="Id: 1" ng-model="searchIdTerm" />
+                        <input type="text" name="searchLastNameTerm" placeholder="Last Name: Carlin" ng-model="searchLastNameTerm" />
+                        <input type="text" name="searchEmailTerm" placeholder="Email: test@test.com" ng-model="searchEmailTerm" />
+                      </div>
+                      <button type="submit" class="btn btn-success">
+                        <span class="glyphicon glyphicon-search"></span> Search
+                      </button>
+                    </form>
+
+                    <table class="table table-bordered">
+                        <tr class="alert alert-warning">
+                            <th>Id</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="user in users">
+                            <td ng-class-even="'alert alert-info'">
+                                <span ng-hide="editingUser == true" ng-click="editingUser = true" class="pull-right glyphicon glyphicon-pencil" ng-bind="user.id"></span>
+                            </td>
+                            <td ng-class-even="'alert alert-info'">
+                                <span ng-hide="editingUser == true" ng-bind="user.firstName"></span>
+                                <span ng-show="editingUser == true"><input type="text" ng-model="user.firstName" />
+                            </td>
+                            <td ng-class-even="'alert alert-info'">
+                                <span ng-hide="editingUser == true" ng-bind="user.lastName"></span>
+                                <span ng-show="editingUser == true"><input type="text" ng-model="user.lastName" />
+                            </td>
+                            <td ng-class-even="'alert alert-info'">
+                                <span ng-hide="editingUser == true" ng-bind="user.email"></span>
+                                <span ng-show="editingUser == true"><input type="text" ng-model="user.email" />
+                            </td>
+                            <td ng-class-even="'alert alert-info'">
+                                <span ng-hide="editingUser == true" ng-click="removeUser(user)" class="glyphicon glyphicon-trash"></span>
+                                <span ng-click="updateUser(user);editingUser = false" ng-show="editingUser == true" class="btn btn-success">Save</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+             <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Add User</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" role="form" ng-submit="addUser()">
+                        <div class="form-group">
+                            <label for="newFirstName" class="col-sm-2 control-label">First Name:</label>
+                            <input id="newFirstName" type="text" name="newFirstName" ng-model="newFirstName" />
+                        </div>
+                        <div class="form-group">
+                            <label for="newlastName" class="col-sm-2 control-label">Last Name:</label>
+                            <input id="newLastName" type="text" name="newLastName" ng-model="newLastName" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="newEmail" class="col-sm-2 control-label">Email:</label>
+                            <input id="newEmail" type="text" name="newEmail" ng-model="newEmail" required />
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                              <input type="submit" class="btn btn-success" value="Add User" />
+                            </div>
+                        </div>
+                    </form>  
+                </div>
+            </div>
+            
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4>Get All Users</h4>
+                    <form ng-submit="getAllUsers()">
+                        <input type="submit" class="btn btn-success" value="Get All Users"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block javascripts %}
+      {{ parent() }}
+
+      {% javascripts 
+        '@UserBundle/Resources/public/js/Controllers/UserController.js'
+      %}
+        <script src="{{ asset_url }}"></script>
+      {% endjavascripts %}
+    {% endblock %}
